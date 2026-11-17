@@ -6,6 +6,8 @@ This repository is the owner-managed allowlist for the account-gated proxy packa
 
 Clone this repository to the owner's PC, then run `New-ProxyAccount.ps1` from that clone. It generates a random one-time account key and stores only its SHA-256 hash in `accounts.json`. Give the key to that user privately; the key is not recoverable from the repository. Commit and push the changed `accounts.json` to activate the account. Users do not receive write access.
 
+For a double-click flow, open the cloned `accounts` folder in File Explorer and run `New-ProxyAccount.bat`. It keeps the window open and prints the commands to publish the account.
+
 ```powershell
 git clone https://github.com/aregulargamedeveloper/accounts.git
 cd accounts
