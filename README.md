@@ -4,9 +4,18 @@ This repository is the owner-managed allowlist for the account-gated proxy packa
 
 ## Create and revoke accounts
 
-Run `New-ProxyAccount.ps1` to create an account. It generates a random one-time account key and stores only its SHA-256 hash in `accounts.json`. Give the key to that user privately; the key is not recoverable from the repository. Commit and push `accounts.json` to activate the account.
+Clone this repository to the owner's PC, then run `New-ProxyAccount.ps1` from that clone. It generates a random one-time account key and stores only its SHA-256 hash in `accounts.json`. Give the key to that user privately; the key is not recoverable from the repository. Commit and push the changed `accounts.json` to activate the account. Users do not receive write access.
 
-Run `Revoke-ProxyAccount.ps1` to remove an account. Commit and push `accounts.json` to revoke it. The proxy launchers check the registry each time they start and fail closed if GitHub cannot be reached.
+```powershell
+git clone https://github.com/aregulargamedeveloper/accounts.git
+cd accounts
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\New-ProxyAccount.ps1
+git add accounts.json
+git commit -m "Add proxy account"
+git push
+```
+
+Run `Revoke-ProxyAccount.ps1` from the clone to remove an account. Commit and push `accounts.json` to revoke it. The proxy launchers check the registry each time they start and fail closed if GitHub cannot be reached.
 
 Use nicknames rather than real names because usernames are visible in a public registry. The account keys are generated from 256 bits of randomness; do not replace them with human-chosen passwords.
 
