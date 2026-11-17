@@ -17,7 +17,7 @@ git commit -m "Add proxy account"
 git push
 ```
 
-Run `Revoke-ProxyAccount.ps1` from the clone to remove an account. Commit and push `accounts.json` to revoke it. The proxy launchers check the registry each time they start and fail closed if GitHub cannot be reached.
+To revoke an account, double-click `Revoke-ProxyAccount.bat` in the clone. It asks for the username and requires you to type `REVOKE <username>` before removing the entry. Commit and push the changed `accounts.json` to make the revocation active. You can also run `Revoke-ProxyAccount.ps1` directly. The proxy launchers check the registry each time they start and fail closed if GitHub cannot be reached.
 
 Use nicknames rather than real names because usernames are visible in a public registry. The account keys are generated from 256 bits of randomness; do not replace them with human-chosen passwords.
 
