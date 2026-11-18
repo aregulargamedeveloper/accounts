@@ -1,4 +1,10 @@
 {
-  "schemaVersion": 1,
-  "accounts": []
+    "schemaVersion":  1,
+    "accounts":  [
+                     {
+                         "username":  "admin",
+                         "tokenHash":  "d3b5bc01746dbbc4db1a6aef20e7a59afb0fe276686e47fb25823eeeb71fd30f",
+                         "createdUtc":  "2026-11-18T15:45:36.7749646Z"
+                     }
+                 ]
 }
