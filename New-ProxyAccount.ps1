@@ -16,10 +16,12 @@ if (@($registry.accounts | Where-Object { $_.username -ieq $username }).Count -g
     throw "An account named '$username' already exists."
 }
 
-$randomBytes = New-Object byte[] 32
+$randomBytes = New-Object byte[] 5
 $rng = [Security.Cryptography.RandomNumberGenerator]::Create()
 try { $rng.GetBytes($randomBytes) } finally { $rng.Dispose() }
-$key = 'px_' + [Convert]::ToBase64String($randomBytes).TrimEnd([char[]]'=').Replace('+', '-').Replace('/', '_')
+$alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+$key = -join @($randomBytes | ForEach-Object { $alphabet[[int]$_ % $alphabet.Length] })
+[Array]::Clear($randomBytes, 0, $randomBytes.Length)
 $sha = [Security.Cryptography.SHA256]::Create()
 try { $hash = [BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($key))).Replace('-', '').ToLowerInvariant() } finally { $sha.Dispose() }
 
@@ -36,8 +38,7 @@ Move-Item -LiteralPath $temporary -Destination $registryPath -Force
 Write-Host ''
 Write-Host 'Account added to the local registry.' -ForegroundColor Green
 Write-Host "Username: $username"
-Write-Host "Account key (shown only now): $key" -ForegroundColor Yellow
+Write-Host "5-character password (shown only now): $key" -ForegroundColor Yellow
 Write-Host ''
-Write-Host 'Give the key to the user privately. Then commit and push accounts.json to activate the account.'
-Write-Host 'Do not put the account key in the repository.'
-
+Write-Host 'Give the password to the user privately. Commit and push accounts.json to activate the account.'
+Write-Host 'The repository stores only its SHA-256 hash, never the password.'
